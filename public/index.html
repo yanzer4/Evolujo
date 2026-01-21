@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+  <title>Pacientes</title>
+  </head>
+<body>
+  <div class="topbar">
+  <div class="topbar__left"></div>
+
+  <h1 class="topbar__title">Pacientes</h1>
+
+  <div class="topbar__right">
+    <button id="btnLogout" class="btn warning" type="button">Sair</button>
+  </div>
+</div>
+
+<form id="formPaciente" class="card paciente-form">
+  <h2 class="h2">Cadastrar novo paciente</h2>
+
+  <label for="nomePaciente">Nome do paciente</label>
+  <input id="nomePaciente" type="text" placeholder="Digite o nome" required />
+
+  <button type="submit" class="btn success">CADASTRAR PACIENTE</button>
+</form>
+
+  <p id="status"></p>
+
+  <ul id="listaPacientes" class="list"></ul>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+# Dependências
+node_modules/
+
+# Banco de dados SQLite
+*.db
+*.db-shm
+*.db-wal
+
+# Logs
+npm-debug.log*

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <link rel="stylesheet" href="style.css">
+  <title>Evoluções</title>
+</head>
+<body>
+  <div class="top-actions right">
+    <a href="index.html" class="btn info">← Voltar para pacientes</a>
+  </div>
+
+  <h1 id="titulo">Evoluções</h1>
+
+  <form id="formEvolucao">
+    <label>
+      Data do atendimento:
+      <input id="dataAtendimento" type="date" required/>
+    </label>
+
+    <br /><br />
+
+    <label>
+      Texto da evolução:
+      <br />
+      <textarea id="textoEvolucao" rows="6" cols="50" required></textarea>
+    </label>
+
+    <br /><br />
+
+    <!-- AQUI: botões + checkbox ao lado do Exportar -->
+    <div class="actions" style="flex-wrap: wrap;">
+      <button id="btnSalvar" type="submit" class="btn success">Salvar evolução</button>
+      <button id="btnCancelarEdicao" type="button" class="btn danger">Cancelar edição</button>
+
+      <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+        <button id="btnExportarPDF" type="button" class="btn info">📄 Exportar como PDF</button>
+
+        <label style="display:flex; gap:8px; align-items:center; font-size:14px; color:#6b7280; margin:0;">
+          <input id="chkDataImpressao" type="checkbox" checked />
+          Deseja que saia a data de impressão?
+        </label>
+      </div>
+    </div>
+  </form>
+
+  <p id="status"></p>
+
+  <h2>Histórico</h2>
+  <ul id="listaEvolucoes" class="list"></ul>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="evolucoes.js"></script>
+</body>
+</html>
