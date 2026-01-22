@@ -358,9 +358,19 @@ input:focus, textarea:focus{
 body.login-bg{
   background-image: url("evolujologin.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+}
+
+/* Ajuste para mobile - usar imagem específica */
+@media (max-width: 768px){
+  body.login-bg{
+    background-image: url("loginmobile.jpg");
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+    min-height: 100vh;
+  }
 }
 
 /* Overlay escuro para o card ficar legível */

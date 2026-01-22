@@ -13,6 +13,7 @@ const btnSalvar = document.getElementById('btnSalvar');
 const btnCancelar = document.getElementById('btnCancelarEdicao');
 const btnExportarPDF = document.getElementById('btnExportarPDF');
 const chkDataImpressao = document.getElementById('chkDataImpressao');
+const chkCarimbo = document.getElementById('chkCarimbo');
 
 
 let evolucaoEditandoId = null;
@@ -137,6 +138,22 @@ function desenharLinhaSeparadora(ctx, tituloPdf) {
   ctx.y += 6;
 }
 
+function desenharCarimbo(ctx) {
+  const incluirCarimbo = !!(chkCarimbo && chkCarimbo.checked);
+  if (!incluirCarimbo) return;
+
+  const doc = ctx.doc;
+  const pageWidth = ctx.pageWidth;
+  const pageHeight = ctx.pageHeight;
+
+  const carimboWidth = 80;
+  const carimboHeight = 35;
+  const x = pageWidth - carimboWidth - 12;
+  const y = pageHeight - carimboHeight - 12;
+
+  doc.addImage('CARIMBOJB.png', 'PNG', x, y, carimboWidth, carimboHeight);
+}
+
 function escreverEvolucaoNoPdf(ctx, evo, tituloPdf) {
   // Data
   ctx.doc.setFont('helvetica', 'bold');
@@ -167,6 +184,8 @@ function exportarPdfEvolucoes(evolucoes, nomeArquivo, tituloPdf) {
   for (const evo of ordenadas) {
     escreverEvolucaoNoPdf(ctx, evo, tituloPdf);
   }
+
+  desenharCarimbo(ctx);
 
   ctx.doc.save(nomeArquivo);
 }
