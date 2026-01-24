@@ -5,30 +5,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css">
   <title>Pacientes</title>
-  </head>
+</head>
 <body>
-  <div class="topbar">
-  <div class="topbar__left"></div>
+<header class="main-header">
+    <h1>Pacientes</h1>
+    <button id="btnLogout" class="btn-sair">Sair</button>
+</header>
 
-  <h1 class="topbar__title">Pacientes</h1>
+<main class="container">
+    <section class="card">
+        <h3>Cadastrar novo paciente</h3>
+        <div class="input-group">
+            <label for="nomePaciente">Nome do paciente</label>
+            <div class="form-row">
+                <input type="text" id="nomePaciente" placeholder="Digite o nome">
+                <button onclick="cadastrarPaciente()" class="btn-primary">CADASTRAR PACIENTE</button>
+            </div>
+        </div>
+    </section>
 
-  <div class="topbar__right">
-    <button id="btnLogout" class="btn warning" type="button">Sair</button>
-  </div>
-</div>
-
-<form id="formPaciente" class="card paciente-form">
-  <h2 class="h2">Cadastrar novo paciente</h2>
-
-  <label for="nomePaciente">Nome do paciente</label>
-  <input id="nomePaciente" type="text" placeholder="Digite o nome" required />
-
-  <button type="submit" class="btn success">CADASTRAR PACIENTE</button>
-</form>
+    <section class="card">
+        <h4 id="totalPacientes">Total: 0 paciente(s).</h4>
+        <hr>
+        <div id="listaPacientes" class="pacientes-grid">
+            <p class="empty-msg">Nenhum paciente cadastrado ainda.</p>
+        </div>
+    </section>
+</main>
 
   <p id="status"></p>
-
-  <ul id="listaPacientes" class="list"></ul>
 
   <script src="app.js"></script>
 </body>

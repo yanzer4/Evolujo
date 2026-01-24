@@ -1,7 +1,7 @@
-const form = document.getElementById('formPaciente');
 const inputNome = document.getElementById('nomePaciente');
 const lista = document.getElementById('listaPacientes');
 const statusEl = document.getElementById('status');
+const totalPacientesEl = document.getElementById('totalPacientes');
 
 function setStatus(msg, isError = false) {
   statusEl.textContent = msg;
@@ -23,44 +23,30 @@ function renderPacientes(pacientes) {
   lista.innerHTML = '';
 
   if (!pacientes || pacientes.length === 0) {
-    const li = document.createElement('li');
-    li.textContent = 'Nenhum paciente cadastrado ainda.';
-    lista.appendChild(li);
+    lista.innerHTML = '<p class="empty-msg">Nenhum paciente cadastrado ainda.</p>';
+    totalPacientesEl.textContent = 'Total: 0 paciente(s).';
     return;
   }
 
-  for (const p of pacientes) {
-    const li = document.createElement('li');
-    li.className = 'list-item clickable';
+  pacientes.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'paciente-item';
+    div.innerHTML = `
+      <span>${p.nome}</span>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn-detalhes" onclick="window.location.href='evolucoes.html?pacienteId=${p.id}&nome=${encodeURIComponent(p.nome)}'">Ver Evoluções</button>
+        <button class="btn danger" onclick="removerPaciente(${p.id}, '${p.nome}')">Remover</button>
+      </div>
+    `;
+    lista.appendChild(div);
+  });
+  
+  totalPacientesEl.textContent = `Total: ${pacientes.length} paciente(s).`;
+}
 
-    const row = document.createElement('div');
-    row.className = 'row';
-
-    const nome = document.createElement('span');
-    nome.textContent = p.nome; // ou `${p.id} - ${p.nome}`
-    nome.style.fontSize = '18px';
-    nome.style.fontWeight = '700';
-
-    const btnRemover = document.createElement('button');
-    btnRemover.type = 'button';
-    btnRemover.className = 'btn danger';
-    btnRemover.textContent = 'Remover';
-
-    btnRemover.addEventListener('click', (e) => {
-      e.stopPropagation();
-      removerPaciente(p.id, p.nome);
-    });
-
-    li.addEventListener('click', () => {
-      window.location.href =
-        `evolucoes.html?pacienteId=${p.id}&nome=${encodeURIComponent(p.nome)}`;
-    });
-
-    row.appendChild(nome);
-    row.appendChild(btnRemover);
-    li.appendChild(row);
-    lista.appendChild(li);
-  }
+// Nova função conforme solicitado
+function atualizarLista(pacientes) {
+  renderPacientes(pacientes);
 }
 
 
@@ -86,7 +72,7 @@ async function carregarPacientes() {
     if (!resp.ok) throw new Error(`Erro ao listar: HTTP ${resp.status}`);
     const pacientes = await resp.json();
     renderPacientes(pacientes);
-    setStatus(`Total: ${pacientes.length} paciente(s).`);
+    setStatus(''); // Limpa status pois total agora aparece no header
   } catch (err) {
     setStatus(err.message, true);
   }
@@ -118,19 +104,22 @@ async function removerPaciente(id, nome) {
   const ok = confirm(`Remover o paciente "${nome}"?`);
   if (!ok) return;
 
-  const resp = await fetch(`/pacientes/${id}`, { method: 'DELETE' });
+  try {
+    const resp = await fetch(`/pacientes/${id}`, { method: 'DELETE' });
 
-  if (!resp.ok && resp.status !== 204) {
-    const erro = await resp.json().catch(() => ({}));
-    alert(erro.erro || 'Erro ao remover paciente');
-    return;
+    if (!resp.ok && resp.status !== 204) {
+      const erro = await resp.json().catch(() => ({}));
+      alert(erro.erro || 'Erro ao remover paciente');
+      return;
+    }
+    await carregarPacientes();
+  } catch (err) {
+    setStatus('Erro ao remover paciente: ' + err.message, true);
   }
-  carregarPacientes(); // sua função que recarrega a lista
 }
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
+// Nova função para o botão cadastrar
+async function cadastrarPaciente() {
   const nome = inputNome.value.trim();
   if (nome.length < 2) {
     setStatus('Digite um nome válido (mínimo 2 letras).', true);
@@ -146,7 +135,7 @@ form.addEventListener('submit', async (e) => {
   } catch (err) {
     setStatus(err.message, true);
   }
-});
+}
 
 // Ao abrir a página, carrega a lista
 (async () => {

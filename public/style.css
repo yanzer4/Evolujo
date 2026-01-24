@@ -15,6 +15,23 @@
 body{
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   font-size: 18px; /* ajuste aqui para ficar igual ao seu "Histórico" */
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Background apenas para página pacientes (sem classe evolucoes-page) */
+body:not(.evolucoes-page){
+  background-image: url("backgroundPACIENTES.png");
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* Página evolucoes com fundo normal */
+body.evolucoes-page{
+  background: var(--bg);
 }
 
 
@@ -23,7 +40,6 @@ html, body{ height: 100%; }
 body{
   margin: 0;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-  background: var(--bg);
   color: var(--text);
 }
 
@@ -40,11 +56,13 @@ a{ color: inherit; text-decoration: none; }
 }
 
 .card{
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.95);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   padding: 16px;
+  position: relative;
+  z-index: 1;
 }
 
 .grid{
@@ -382,6 +400,15 @@ body.login-bg::before{
   z-index: 0;
 }
 
+/* Overlay para página pacientes garantir legibilidade */
+body:not(.evolucoes-page)::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.3);
+  z-index: -1;
+}
+
 /* Mantém o conteúdo do login acima do overlay */
 body.login-bg .container,
 body.login-bg .login-card{
@@ -399,4 +426,107 @@ body.login-bg .container{
   height: 100vh;         /* garante ocupar a altura toda */
   display: grid;
   place-items: center;   /* mantém centralizado */
+}
+
+/* Estilos do novo layout de pacientes */
+
+.container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Header Superior */
+.main-header {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1;
+}
+
+/* Formulário Lado a Lado */
+.form-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+/* Botões específicos do novo layout */
+.btn-primary {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.btn-sair {
+    background-color: #a78bfa;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-sair:hover {
+    background-color: #8b5cf6;
+}
+
+/* Estilo para quando houver pacientes */
+.paciente-item {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pacientes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.empty-msg {
+    text-align: center;
+    color: #6b7280;
+    padding: 20px;
+    font-style: italic;
+}
+
+/* Botão de detalhes do paciente */
+.btn-detalhes {
+    background-color: #38bdf8;
+    color: #003049;
+    border: 1px solid #0ea5e9;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-detalhes:hover {
+    background-color: #0ea5e9;
+    color: white;
+}
+
+/* Melhorias de foco para inputs do novo layout */
+.input-group input[type="text"]:focus {
+    border-color: #27ae60;
+    box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1);
 }
