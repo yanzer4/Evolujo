@@ -3,8 +3,19 @@ const usernameEl = document.getElementById('username');
 const passwordEl = document.getElementById('password');
 const statusEl = document.getElementById('status');
 
+// Inicializar status como oculto ao carregar a página
+statusEl.classList.add('hidden');
+
 function setStatus(msg, isError = false) {
+  if (!msg) {
+    statusEl.textContent = '';
+    statusEl.classList.add('hidden');
+    statusEl.style.color = '';
+    return;
+  }
+  
   statusEl.textContent = msg;
+  statusEl.classList.remove('hidden');
   statusEl.style.color = isError ? 'crimson' : 'green';
 }
 
@@ -33,7 +44,8 @@ form.addEventListener('submit', async (e) => {
       throw new Error(`Falha no login: HTTP ${resp.status}${detalhe}`);
     }
 
-    // se ok, volta para a tela principal
+// se ok, volta para a tela principal
+    setStatus('');  // Limpar status antes de redirecionar
     window.location.href = '/';
   } catch (err) {
     setStatus(err.message, true);

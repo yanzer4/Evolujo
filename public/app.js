@@ -4,7 +4,15 @@ const statusEl = document.getElementById('status');
 const totalPacientesEl = document.getElementById('totalPacientes');
 
 function setStatus(msg, isError = false) {
+  if (!msg) {
+    statusEl.textContent = '';
+    statusEl.className = 'hidden';
+    statusEl.style.color = '';
+    return;
+  }
+  
   statusEl.textContent = msg;
+  statusEl.className = '';
   statusEl.style.color = isError ? 'crimson' : 'green';
 }
 
