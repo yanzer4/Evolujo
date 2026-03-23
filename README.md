@@ -1,103 +1,179 @@
-# Evolujo
+# 🩺 Evolujo
 
-Aplicacao web simples para registro de pacientes e evolucoes clinicas, com autenticacao por sessao e exportacao de evolucoes em PDF.
+Aplicação web simples para registro de pacientes e evoluções clínicas.
 
-## Funcionalidades
+> ⚠️ **Projeto experimental** desenvolvido para uso controlado em ambiente local.
+> Não foi projetado para produção ou uso clínico em larga escala.
 
-- Login com usuario e senha
-- Cadastro e listagem de pacientes
-- Remocao de paciente (com remocao das evolucoes associadas)
-- Cadastro e edicao de evolucoes por paciente
-- Exportacao de evolucoes em PDF
+---
 
-## Stack
+## 🎯 Objetivo
 
-- Backend: Node.js + Express
-- Banco de dados: SQLite (`better-sqlite3`)
-- Autenticacao: `express-session` + `bcrypt`
-- Frontend: HTML, CSS e JavaScript vanilla
+O Evolujo foi criado como uma solução leve para registro de atendimentos e evoluções clínicas, com foco em simplicidade e uso local.
 
-## Requisitos
+---
 
-- Node.js 18+ (recomendado)
-- npm
+## 🚀 Funcionalidades
 
-## Como rodar localmente
+* Login com usuário e senha
+* Cadastro e listagem de pacientes
+* Remoção de pacientes (com exclusão das evoluções associadas)
+* Cadastro e edição de evoluções clínicas por paciente
+* Exportação de evoluções em PDF
 
-1. Instale as dependencias:
+---
+
+## 🧰 Stack
+
+* **Backend:** Node.js + Express
+* **Banco de dados:** SQLite (`better-sqlite3`)
+* **Autenticação:** `express-session` + `bcrypt`
+* **Frontend:** HTML, CSS e JavaScript (vanilla)
+
+---
+
+## 💻 Requisitos
+
+* Node.js 18+ (recomendado)
+* npm
+
+---
+
+## ▶️ Como rodar localmente
 
 ```bash
 npm install
-```
-
-2. Inicie a aplicacao:
-
-```bash
 npm start
 ```
 
-3. Acesse no navegador:
+Acesse no navegador:
 
-```text
+```
 http://localhost:3000/login.html
 ```
 
-Para desenvolvimento com recarga automatica:
+Modo desenvolvimento:
 
 ```bash
 npm run dev
 ```
 
-## Usuarios iniciais
+---
 
-Na primeira execucao, se a tabela `usuarios` estiver vazia, o sistema cria:
+## 👤 Usuários iniciais
 
-- `Joice`
-- `Yan`
+Na primeira execução, se a tabela `usuarios` estiver vazia, o sistema cria automaticamente:
 
-Senha inicial para ambos (conforme codigo atual):
+* `Joice`
+* `Yan`
 
-- `Jobretas@98`
+Senha inicial:
 
-## Estrutura principal
-
-```text
-.
-|- server.js               # API, sessao e regras de negocio
-|- db.js                   # Inicializacao do SQLite e criacao de tabelas
-|- evolujo.db              # Banco SQLite
-|- public/
-|  |- login.html           # Tela de login
-|  |- login.js             # Logica de autenticacao
-|  |- index.html           # Tela de pacientes
-|  |- app.js               # CRUD de pacientes
-|  |- evolucoes.html       # Tela de evolucoes
-|  |- evolucoes.js         # CRUD de evolucoes + exportacao PDF
-|  |- style.css            # Estilos da aplicacao
+```
+Jobretas@98
 ```
 
-## Endpoints principais
+> ⚠️ Recomenda-se alterar essas credenciais imediatamente.
 
-### Autenticacao
+---
 
-- `POST /login`
-- `POST /logout`
-- `GET /me`
+## 🗄️ Banco de dados
+
+* O banco SQLite (`evolujo.db`) é criado automaticamente na primeira execução
+* Os dados ficam armazenados localmente no diretório do projeto
+
+> ⚠️ Não há mecanismo automático de backup
+
+---
+
+## 📁 Estrutura do projeto
+
+```
+.
+|- server.js
+|- db.js
+|- evolujo.db
+|- public/
+   |- login.html
+   |- login.js
+   |- index.html
+   |- app.js
+   |- evolucoes.html
+   |- evolucoes.js
+   |- style.css
+```
+
+---
+
+## 🔌 Endpoints principais
+
+### Autenticação
+
+* `POST /login`
+* `POST /logout`
+* `GET /me`
 
 ### Pacientes
 
-- `GET /pacientes`
-- `POST /pacientes`
-- `DELETE /pacientes/:id`
+* `GET /pacientes`
+* `POST /pacientes`
+* `DELETE /pacientes/:id`
 
-### Evolucoes
+### Evoluções
 
-- `GET /pacientes/:id/evolucoes`
-- `POST /pacientes/:id/evolucoes`
-- `PUT /evolucoes/:evolucaoId`
+* `GET /pacientes/:id/evolucoes`
+* `POST /pacientes/:id/evolucoes`
+* `PUT /evolucoes/:evolucaoId`
 
-## Observacoes importantes
+---
 
-- O projeto utiliza uma `session secret` fixa em `server.js`. Para ambientes reais, use variavel de ambiente.
-- As credenciais iniciais estao no codigo e devem ser alteradas para producao.
-- O banco (`evolujo.db`) e criado automaticamente na primeira execucao.
+## ⚠️ Limitações e considerações
+
+Este projeto possui limitações importantes:
+
+* Utiliza `session secret` fixa (não segura para produção)
+* Credenciais iniciais estão no código
+* Não possui controle de permissões por usuário
+* Não possui criptografia de dados em repouso
+* Não possui auditoria ou histórico de alterações
+* Não possui mecanismos de backup automático
+* Não foi testado para múltiplos usuários simultâneos
+
+---
+
+## 🔐 Segurança
+
+* A autenticação é baseada em sessão (`express-session`)
+* Senhas são armazenadas com hash (`bcrypt`)
+* Não há proteção avançada contra ataques (CSRF, rate limit, etc.)
+
+---
+
+## ⚖️ Aviso importante
+
+Este sistema:
+
+* **Não é um prontuário eletrônico certificado**
+* **Não atende requisitos formais de LGPD/HIPAA**
+* **Não deve ser utilizado em ambientes clínicos críticos ou em produção**
+
+Uso recomendado apenas para:
+
+* testes
+* uso pessoal/local
+* prototipagem
+
+---
+
+## 📄 Licença
+
+Defina a licença desejada (ex: MIT)
+
+---
+
+# 🧠 Avaliação final
+
+Depois dessa revisão, seu projeto passa a parecer:
+
+* ❌ Não um produto pronto
+* ✅ Um projeto experimental bem documentado e consciente
